@@ -8,6 +8,7 @@
 #include <random>
 #include <utility>
 #include <vector>
+#include <thread>
 
 #include "utils/tutorial.h"
 
@@ -36,6 +37,60 @@ TEST(TutorialTests, BasicTest) {
 
     std::cout << student2;
 
+}
+
+TEST(TutorialTests, RWLatchTest) {
+  EXPECT_EQ(2, 1 + 1);
+  atomic<size_t> value = 0;
+  vector<thread> threads;
+  buzzdb::utils::RWLatch obj;
+  size_t num_of_threads = 50;
+  /*
+  threads.emplace_back(
+    [&value, &obj] {
+      size_t result = obj.get();
+      EXPECT_GE(result, value);
+      value = result;
+    }
+  );
+
+  threads.emplace_back(
+    [&value, &obj] {
+      size_t result = obj.increment();
+      EXPECT_EQ(result, value + 1);
+      value = result;
+    }
+  );
+
+  threads.emplace_back(
+    [&value, &obj] {
+      size_t result = obj.increment();
+      EXPECT_EQ(result, value + 1);
+      value = result;
+    }
+  );
+  */
+  for (size_t i = 0; i < num_of_threads; ++i) {
+    threads.emplace_back(
+      [i, &value, &obj] {
+        size_t result = 0;
+        if (i % 3 == 0) {
+          // writer
+          result = obj.increment();
+          EXPECT_EQ(result, value + 1);
+        } else {
+          // reader
+          result = obj.get();
+          EXPECT_GE(result, value);
+        }
+        value = result;
+      }
+    );
+  }
+
+  for (size_t i = 0; i < num_of_threads; ++i) {
+    threads[i].join();
+  }
 }
 
 }  // namespace
