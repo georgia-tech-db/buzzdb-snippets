@@ -5,6 +5,8 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include <shared_mutex>
+#include <mutex>
 
 #include "utils/tutorial.h"
 
@@ -150,6 +152,26 @@ std::ostream& operator <<(std::ostream& os, const GraduateStudent& student)
     return os;
 }
 
+//////////////////////////////////////////////////////////////////////////////
+///// READER WRITER LATCH CLASS
+//////////////////////////////////////////////////////////////////////////////
+RWLatch::RWLatch() {
+    count = 0;
+}
 
+RWLatch::~RWLatch() {}
+
+size_t RWLatch::get() const {
+    // reader, acquire shared_lock
+    shared_lock<shared_mutex> lck(mutex_);
+    return count;
+}
+
+size_t RWLatch::increment() {
+    // writer, acquire unique_lock
+    unique_lock<shared_mutex> lck(mutex_);
+    ++count;
+    return count;
+}
 }
 }

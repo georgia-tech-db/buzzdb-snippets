@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <memory>
+#include <shared_mutex>
+#include <mutex>
+using namespace std;
 
 namespace buzzdb{
 namespace utils{
@@ -79,6 +82,19 @@ public:
         int advisor_id);
 
     friend std::ostream& operator<<(std::ostream& os, const GraduateStudent& s);
+};
+
+// A class used to illustrate a reader-writer latch
+class RWLatch {
+private:
+    size_t count;
+    size_t seq;
+    mutable shared_mutex mutex_;
+public:
+    RWLatch();
+    ~RWLatch();
+    size_t get() const;
+    size_t increment();
 };
 
 }  

@@ -10,22 +10,22 @@ add_custom_target(check-tests COMMAND ${CMAKE_CTEST_COMMAND})
 add_custom_target(check-tests-valgrind COMMAND ${CMAKE_CTEST_COMMAND})
 
 file(GLOB_RECURSE TEST_CC
-	 ${CMAKE_SOURCE_DIR}/test/unit/*.cc 
+	# ${CMAKE_SOURCE_DIR}/test/unit/*.cc 
 	 ${CMAKE_SOURCE_DIR}/test/unit/*/*.cc
 )
 
 # make XYZ_test
 
 foreach (test_source ${TEST_CC})
-
+    
     # Get a human readable name
     get_filename_component(test_filename ${test_source} NAME)
     string(REPLACE ".cc" "" test_name ${test_filename})
 
     # Add the test target separately and as part of "make check-tests".
-    add_executable(${test_name} EXCLUDE_FROM_ALL ${test_source})
+    add_executable(${test_name} ${test_source})
     add_dependencies(check-tests ${test_name})
-    add_executable(${test_name}_valgrind EXCLUDE_FROM_ALL ${test_source})
+    add_executable(${test_name}_valgrind ${test_source})
     add_dependencies(check-tests-valgrind ${test_name}_valgrind)
 
     target_link_libraries(${test_name} 
