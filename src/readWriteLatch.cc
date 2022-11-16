@@ -79,7 +79,7 @@ void readWriteLatchExample() {
                 resourceLock.lock();
                 {
                     std::lock_guard<std::mutex> lock(printLock);
-                    std::cout << "Thread "<< i << " acquirED writer latch" << std::endl;
+                    std::cout << "Thread "<< i << " ACQUIRED writer latch" << std::endl;
                 }
                 resource++;
                 {
@@ -92,7 +92,7 @@ void readWriteLatchExample() {
                 resourceLock.lock_shared();
                 {
                     std::lock_guard<std::mutex> lock(printLock);
-                    std::cout << "Thread "<< i << " acquirED read latch" << std::endl;
+                    std::cout << "Thread "<< i << " ACQUIRED read latch" << std::endl;
                 }
                 sleep(1);
                 {
@@ -118,27 +118,27 @@ int main() {
 Example output:
 
 Thread 0 waiting for writer latch
-Thread 0 acquirED writer latch
+Thread 0 ACQUIRED writer latch
 
 Resource is now: 1
 
 Thread 0 releasing writier latch
 Thread 2 waiting for reader latch
-Thread 2 acquirED read latch
+Thread 2 ACQUIRED read latch
 Thread 1 waiting for writer latch
 Thread 5 waiting for reader latch
-Thread 5 acquirED read latch
+Thread 5 ACQUIRED read latch
 Thread 7 waiting for reader latch
-Thread 7 acquirED read latch
+Thread 7 ACQUIRED read latch
 Thread 6 waiting for writer latch
 Thread 4 waiting for reader latch
-Thread 4 acquirED read latch
+Thread 4 ACQUIRED read latch
 Thread 3 waiting for reader latch
-Thread 3 acquirED read latch
+Thread 3 ACQUIRED read latch
 Thread 9 waiting for reader latch
-Thread 9 acquirED read latch
+Thread 9 ACQUIRED read latch
 Thread 8 waiting for reader latch
-Thread 8 acquirED read latch
+Thread 8 ACQUIRED read latch
 Thread 5 releasing read latch
 Thread 7 releasing read latch
 Thread 3 releasing read latch
@@ -146,12 +146,12 @@ Thread 2 releasing read latch
 Thread 9 releasing read latch
 Thread 8 releasing read latch
 Thread 4 releasing read latch
-Thread 1 acquirED writer latch
+Thread 1 ACQUIRED writer latch
 
 Resource is now: 2
 
 Thread 1 releasing writier latch
-Thread 6 acquirED writer latch
+Thread 6 ACQUIRED writer latch
 
 Resource is now: 3
 
