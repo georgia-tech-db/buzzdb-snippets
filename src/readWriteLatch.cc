@@ -7,6 +7,37 @@
 #include <unistd.h>
 #include <time.h>
 
+// ______               _                 
+// | ___ \             | |                
+// | |_/ /___  __ _  __| |                
+// |    // _ \/ _` |/ _` |                
+// | |\ \  __/ (_| | (_| |                
+// \_| \_\___|\__,_|\__,_|                
+                                    
+//  _    _      _ _                       
+// | |  | |    (_) |                      
+// | |  | |_ __ _| |_ ___                 
+// | |/\| | '__| | __/ _ \                
+// \  /\  / |  | | ||  __/                
+//  \/  \/|_|  |_|\__\___|                
+                                                                            
+//  _           _       _                 
+// | |         | |     | |                
+// | |     __ _| |_ ___| |__              
+// | |    / _` | __/ __| '_ \             
+// | |___| (_| | || (__| | | |            
+// \_____/\__,_|\__\___|_| |_|            
+                                                                             
+//  _____                          _      
+// |  ___|                        | |     
+// | |____  ____ _ _ __ ___  _ __ | | ___ 
+// |  __\ \/ / _` | '_ ` _ \| '_ \| |/ _ \
+// | |___>  < (_| | | | | | | |_) | |  __/
+// \____/_/\_\__,_|_| |_| |_| .__/|_|\___|
+//                          | |           
+//                          |_|           
+
+
 // create a resource that will be incrimented once by each writer thread.
 int resource = 0;
 
@@ -19,12 +50,14 @@ std::vector<std::thread> threads; // threads to be joined.
 void readWriteLatchExample() {
 
     /*
+
+    Objective: showcase behavior of read and write latches (with std::shared_mutex). In this simple example, we will atomically increment a resource value to represent the number of writers who have obtained the writer lock.
     
     Things to notice once run:
 
     1. Many read latches may be aquired in a row. This is because reading threads aquire a shared mutex. Similarly, many read latches may be released in a row.
 
-    2. Threads that aquire a write latch must wait (often a while) for all read latches to be released. Read threads must wait until the write lock is released to aquire read locks.
+    2. Threads that eventually aquire a write latch must wait (often a while) for all read latches to be released. Read threads must wait until the write lock is released to aquire read locks.
 
     3. The final resource value equals the number of writer threads, since atomic incrementation is experienced through mutual exclusion.
     
@@ -79,3 +112,50 @@ void readWriteLatchExample() {
 int main() {
     readWriteLatchExample();
 }
+
+/* 
+
+Example output:
+
+Thread 0 waiting for writer latch
+Thread 0 AQUIRED writer latch
+
+Resource is now: 1
+
+Thread 0 releasing writier latch
+Thread 2 waiting for reader latch
+Thread 2 AQUIRED read latch
+Thread 1 waiting for writer latch
+Thread 5 waiting for reader latch
+Thread 5 AQUIRED read latch
+Thread 7 waiting for reader latch
+Thread 7 AQUIRED read latch
+Thread 6 waiting for writer latch
+Thread 4 waiting for reader latch
+Thread 4 AQUIRED read latch
+Thread 3 waiting for reader latch
+Thread 3 AQUIRED read latch
+Thread 9 waiting for reader latch
+Thread 9 AQUIRED read latch
+Thread 8 waiting for reader latch
+Thread 8 AQUIRED read latch
+Thread 5 releasing read latch
+Thread 7 releasing read latch
+Thread 3 releasing read latch
+Thread 2 releasing read latch
+Thread 9 releasing read latch
+Thread 8 releasing read latch
+Thread 4 releasing read latch
+Thread 1 AQUIRED writer latch
+
+Resource is now: 2
+
+Thread 1 releasing writier latch
+Thread 6 AQUIRED writer latch
+
+Resource is now: 3
+
+Thread 6 releasing writier latch
+--------
+Number of writers processed: 3
+*/
