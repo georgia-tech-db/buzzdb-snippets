@@ -1,0 +1,11 @@
+This script is created to implement read-write latch. 
+read_lock, write_lock, read_unlock, write_unlock in rwlatch.hpp deals with lock/unlock using conditional variables and mutex.
+The strategy used here prioritizes reading over writing. Readers may starve writers under this implementation.
+rwlatch.cpp tests the program. To serve as a tutorial, we print out all intermediate statuses.
+
+
+
+//Reference: 
+//https://stackoverflow.com/questions/12033188/how-would-you-implement-your-own-reader-writer-lock-in-c11
+//https://github.com/kw90/ReadWriteLock
+//https://www.educative.io/blog/modern-multithreading-and-concurrency-in-cpp
