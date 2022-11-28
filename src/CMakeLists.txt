@@ -21,7 +21,6 @@ file(GLOB_RECURSE INCLUDE_H
 set(
     INCLUDE_H
     ${CMAKE_SOURCE_DIR}/src/include
-    ${CMAKE_SOURCE_DIR}/test/unit/include
     ${CMAKE_SOURCE_DIR}    
 )
 
