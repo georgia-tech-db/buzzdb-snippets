@@ -31,7 +31,7 @@ TEST(DECTests, SingleEntryCompressionTest) {
     entries.push_back(t);
 
     Dictionary dictionary(entries);
-
+ 
     EXPECT_EQ(dictionary.size(),1);
     EXPECT_EQ(dictionary.compress(t),ct);
 }
