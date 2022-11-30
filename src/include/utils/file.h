@@ -6,7 +6,9 @@
 namespace buzzdb{
 namespace utils{
 
-void hello_world();
+
+int hash_function(size_t k, size_t size);
+std::vector<std::pair<int, int>> robin_hood_hashing(std::vector<int> values, int size);
 
 }  // namespace utils
 }  // namespace buzzdb
