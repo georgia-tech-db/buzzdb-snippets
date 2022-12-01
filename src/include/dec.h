@@ -11,6 +11,7 @@ namespace buzzdb
    namespace dec
    {
 
+      /// @brief  Hasher helper class to store Entry objects in a std::unordered_map
       class Hasher
       {
       public:
@@ -22,7 +23,7 @@ namespace buzzdb
       };
 
       /// @brief Represents an uncompressed entry
-      /// @tparam T
+      /// @tparam T - value encapsulated by an Entry object
       template <typename T>
       class Entry
       {
@@ -101,6 +102,8 @@ namespace buzzdb
          }
          ~Dictionary()
          {
+            encode_map.clear();
+            decode_map.clear();
          }
 
       private:
