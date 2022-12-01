@@ -8,3 +8,4 @@ RUN   apt-get -y update && apt-get -y install build-essential \
 
 RUN   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 
+WORKDIR /
