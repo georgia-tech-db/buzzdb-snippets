@@ -11,10 +11,12 @@ namespace buzzdb
    namespace dec
    {
 
-      class Hasher{
-         public:
+      class Hasher
+      {
+      public:
          template <typename T>
-         uint64_t operator()(const T& ce) const {
+         uint64_t operator()(const T &ce) const
+         {
             return ce.get_hash();
          }
       };
@@ -42,19 +44,10 @@ namespace buzzdb
             return std::hash<T>{}(value);
          }
 
-         bool operator==(const Entry<T> other) const {
+         bool operator==(const Entry<T> other) const
+         {
             return value == other.value;
          }
-
-         // template <typename E>
-         // class Hasher
-         // {
-         // public:
-         //    size_t operator()(const Entry<E> e) const
-         //    {
-         //       return std::hash<E>{}(e.get_value());
-         //    }
-         // };
       };
 
       /// @brief Represents a compressed entry
@@ -64,29 +57,10 @@ namespace buzzdb
          uint32_t value;
 
       public:
-         CompressedEntry(uint32_t val) : value{val}
-         {
-         }
-
-         uint32_t get_value()
-         {
-            return value;
-         }
-
-         uint64_t get_hash() const
-         {
-            return std::hash<uint32_t>{}(value);
-         }
-
-         friend bool operator==(const CompressedEntry c1, const CompressedEntry c2);
-
-         // class Hasher
-         // {
-         //    uint64_t operator()(const CompressedEntry &ce) const
-         //    {
-         //       return ce.get_hash();
-         //    }
-         // };
+         CompressedEntry(uint32_t val);
+         uint32_t get_value();
+         uint64_t get_hash() const;
+         bool operator==(const CompressedEntry other) const;
       };
 
       /// @brief Dictionary data structure for Dictionary Encoding Compression Scheme
@@ -95,25 +69,30 @@ namespace buzzdb
       /// - Implemented using 2 hash tables for two-way encoding and decoding operations
       /// - Does not support range queries
       /// - Does not preserve order
-      /// - Encodes entries to a uint_32t
+      /// - Compresses entries to a uint_32t
       /// @tparam E - type of the uncompressed entries
       template <typename E>
       class Dictionary
       {
       public:
-         Dictionary(std::vector<Entry<E>> entries): counter{0}{
-            for(auto e:entries){
-               if(encode_map.find(e.get_value())==encode_map.end()){
-                     counter++;
-                     encode_map.insert({e.get_value(),counter});
-                     decode_map.insert({counter,e.get_value()});
+         Dictionary(std::vector<Entry<E>> entries) : counter{0}
+         {
+            for (auto e : entries)
+            {
+               if (encode_map.find(e.get_value()) == encode_map.end())
+               {
+                  counter++;
+                  encode_map.insert({e.get_value(), counter});
+                  decode_map.insert({counter, e.get_value()});
                }
             }
          }
-         CompressedEntry compress(Entry<E> e){
+         CompressedEntry compress(Entry<E> e)
+         {
             return encode_map.at(e);
          }
-         Entry<E> decompress(CompressedEntry ce){
+         Entry<E> decompress(CompressedEntry ce)
+         {
             return decode_map.at(ce);
          }
          size_t size() const
@@ -128,9 +107,6 @@ namespace buzzdb
          size_t counter;
          std::unordered_map<Entry<E>, CompressedEntry, Hasher> encode_map;
          std::unordered_map<CompressedEntry, Entry<E>, Hasher> decode_map;
-         // Dictionary(): counter{0}
-         // {
-         // }
       };
 
    } // namespace dec

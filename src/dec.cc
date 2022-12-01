@@ -7,34 +7,29 @@
 
 #define UNUSED(p) ((void)(p))
 
-namespace buzzdb {
-namespace dec {
+namespace buzzdb
+{
+    namespace dec
+    {
 
-// template <typename T> 
-// bool Entry<T>::operator==(const Entry<T> other){
-//     return value == other.value;
-// }
-bool operator==(const CompressedEntry c1, CompressedEntry c2){
-    return c1.value == c2.value;
-}
+        CompressedEntry::CompressedEntry(uint32_t val) : value{val}
+        {
+        }
 
-// template <typename E> 
-// Dictionary<E>::Dictionary(std::vector<Entry<E>> entries): counter{0}{
-//     for(auto e:entries){
-//         if(!encode_map.contains(e.get_value())){
-//             counter++;
-//             encode_map.insert({e.get_value(),counter});
-//             decode_map.insert({counter,e.get_value()});
-//         }
-//     }
-// }
+        uint32_t CompressedEntry::get_value()
+        {
+            return value;
+        }
 
-// template <typename E> CompressedEntry Dictionary<E>::compress(Entry<E> e){
-//     return encode_map.at(e);
-// }
-// template <typename E> Entry<E> Dictionary<E>::decompress(CompressedEntry ce){
-//     return decode_map.at(ce);
-// }
+        uint64_t CompressedEntry::get_hash() const
+        {
+            return std::hash<uint32_t>{}(value);
+        }
 
-}  // namespace dec
-}  // namespace buzzdb
+        bool CompressedEntry::operator==(const CompressedEntry other) const
+        {
+            return value == other.value;
+        }
+
+    } // namespace dec
+} // namespace buzzdb
