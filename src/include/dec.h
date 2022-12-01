@@ -67,9 +67,10 @@ namespace buzzdb
       /// @brief Dictionary data structure for Dictionary Encoding Compression Scheme
       /// - All-at-once encoding
       /// - Uses table-level encoding (all tuples at once)
+      /// - Encoding follows insertion order
       /// - Implemented using 2 hash tables for two-way encoding and decoding operations
       /// - Does not support range queries
-      /// - Does not preserve order
+      /// - Does not preserve alphabetical order
       /// - Compresses entries to a uint_32t
       /// @tparam E - type of the uncompressed entries
       template <typename E>
