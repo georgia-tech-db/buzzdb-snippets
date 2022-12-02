@@ -12,8 +12,13 @@
 
 namespace {
 
-TEST(FileTest, HelloWorld) {
-  buzzdb::utils::hello_world();
+TEST(FileTest, EncodingTest) {
+  std::string str = "aaabbcc";
+
+  std::string result = buzzdb::utils::run_length_encoding(input);
+  std::string expected = "a3b2c2";
+  
+  EXPECT_EQ(expected, result);
 }
 
 }  // namespace

@@ -2,11 +2,12 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 
 namespace buzzdb{
 namespace utils{
 
-void hello_world();
+string compression(const string & str);
 
 }  // namespace utils
 }  // namespace buzzdb
