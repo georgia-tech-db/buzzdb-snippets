@@ -12,8 +12,14 @@
 
 namespace {
 
-TEST(FileTest, HelloWorld) {
-  buzzdb::utils::hello_world();
+TEST(FileTest, InsertTest) {
+  auto RH_table = buzzdb::utils::RHT(5);
+
+  std::cout << "Table created" << std::endl;
+  for (size_t i = 0; i < RH_table.table_size; i++) {
+    EXPECT_EQ(RH_table.insert(i, i), true);
+  }
+  EXPECT_NE(RH_table.insert(6, 6), true);
 }
 
 }  // namespace
