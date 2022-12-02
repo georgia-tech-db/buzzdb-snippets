@@ -9,11 +9,6 @@
 
 #include "utils/run_length_encoding.h"
 
-struct encoding {
-    std::string data;
-    std::pair<int, int> i;
-};
-
 TEST(BasicTest, SimpleEncoding) {
     std::vector<std::pair<int, std::string>> r;
     std::pair<int, std::string> p;
