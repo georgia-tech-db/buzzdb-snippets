@@ -25,7 +25,7 @@ Table relation_grades{
 
 TEST(AlgorithmTest, InnerJoin) {
   const Table expected_table = Table{
-      // ID, Name, Age, Major, Course, Grade
+      // ID, Name, Age, Major, ID, Course, Grade
       {"1", "Alice", "19", "CS", "1", "CS101", "A"},
       {"1", "Alice", "19", "CS", "1", "EE200", "B"},
       {"2", "Jonah", "20", "EE", "2", "CS101", "C"},
