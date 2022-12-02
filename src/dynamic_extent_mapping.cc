@@ -26,6 +26,7 @@ Segment::Segment(uint64_t initial_extent_num_disk_blocks, double growth_factor)
       growth_factor(growth_factor),
       size(0),
       power(1) {
+  // Initialize with base Extent
   Extent* extent = new Extent(initial_extent_num_disk_blocks);
   extents.push_back(extent);
 };
@@ -35,6 +36,7 @@ Segment::~Segment() {
   extents.clear();
 }
 
+/// Adds a string to the db, creates new Extents if needed
 void Segment::add_data(std::string s) {
   std::vector<char> chars(s.begin(), s.end());
 

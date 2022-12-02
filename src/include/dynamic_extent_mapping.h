@@ -4,6 +4,7 @@
 
 namespace buzzdb {
 
+// Represents the lowest level of storage
 class DiskBlock {
  public:
   std::array<char, 16> data;  // each disk block stores 16 bytes of data
@@ -13,6 +14,7 @@ class DiskBlock {
   DiskBlock();
 };
 
+// Made up of contiguous DiskBlocks
 class Extent {
  public:
   std::vector<DiskBlock *> disk_blocks;
@@ -24,6 +26,7 @@ class Extent {
   ~Extent();
 };
 
+// Made up of multiple Extents, not necessarily contiguous
 class Segment {
  public:
   std::vector<Extent *> extents;
