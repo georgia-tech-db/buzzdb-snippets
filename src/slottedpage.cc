@@ -106,7 +106,6 @@ uint32_t SlottedPage::insertRecord(Record &r) {
     page_size += found_free_slot ? slots[id].length : sizeof(Slot) + slots[id].length;
     
     header.LSN = LSN_OP::INSERT;
-    assert(slots[id].valid && "What the fuck");
     return slots[id].slot_id;
 }
 
