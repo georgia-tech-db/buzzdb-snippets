@@ -66,14 +66,15 @@ namespace buzzdb
 
                         size_t queue_idx = init_chunk;
                         vector<size_t> queue_inner_idx(QUEUE_LENGTH + 1);
-                        std::vector<std::vector<char>> queue[QUEUE_LENGTH + 1];
+                        std::vector<std::vector<char>> queue = std::vector<std::vector<char>>(QUEUE_LENGTH + 1);
 
                         for (int i = 0; i < init_chunk - 1; i++)
                         {
                                 uint64_t *tempChunk = new uint64_t[mem_size / RATIO];
                                 memcpy(tempChunk, &input[i*mem_size], mem_size);
                                 std::sort((uint64_t *)tempChunk, (uint64_t *)tempChunk + mem_size / sizeof(uint64_t));
-                                queue[i].insert(queue[i].end(), (char *)tempChunk, (char *)tempChunk + mem_size);
+                                queue[i].assign((char *)tempChunk, (char *)tempChunk + mem_size);
+                                // queue[i].insert(queue[i].end(), (char *)tempChunk, (char *)tempChunk + mem_size);
                                 delete[] tempChunk;
                         }
                         uint64_t *tempChunk = new uint64_t[num_values - mem_size * (init_chunk - 1) / RATIO];
@@ -92,7 +93,7 @@ namespace buzzdb
                                         
                                         sizeOfNewChunk += queue[i + j].size();
                                        
-                                        memcpy((char *)&curr.value, &queue[i+j].data()[queue_inner_idx[i + j]],  sizeof(uint64_t));
+                                        // memcpy((char *)&curr.value, &queue[i+j].data()[queue_inner_idx[i + j]],  sizeof(uint64_t));
                                         mem.push_back(curr);
                                 }
                                 make_heap(mem.begin(), mem.end(), element_cmp());
@@ -118,7 +119,7 @@ namespace buzzdb
                                         element toPush = {0, currmin.chunk_id};
                                         if (queue_inner_idx[currmin.chunk_id] < queue[currmin.chunk_id].size() / RATIO)
                                         {
-                                                memcpy((char *)&toPush.value, &queue[currmin.chunk_id].data()[queue_inner_idx[currmin.chunk_id] * RATIO], sizeof(uint64_t));
+                                                // memcpy((char *)&toPush.value, &queue[currmin.chunk_id].data()[queue_inner_idx[currmin.chunk_id] * RATIO], sizeof(uint64_t));
                                                 mem.push_back(toPush);
                                                 push_heap(mem.begin(), mem.end(), element_cmp());
                                         }
