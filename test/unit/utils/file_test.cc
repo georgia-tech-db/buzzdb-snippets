@@ -12,9 +12,9 @@
 
 namespace {
 
-TEST(FileTest, HelloWorld) {
-  buzzdb::utils::hello_world();
-}
+// TEST(FileTest, HelloWorld) {
+//   buzzdb::utils::hello_world();
+// }
 
 }  // namespace
 

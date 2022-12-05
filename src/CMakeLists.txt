@@ -6,7 +6,6 @@ file(GLOB_RECURSE SRC_CC
 	 ${CMAKE_SOURCE_DIR}/src/*.cc 
 	 ${CMAKE_SOURCE_DIR}/src/*/*.cc 
 	 ${CMAKE_SOURCE_DIR}/src/*/*/*.cc
-     ${CMAKE_SOURCE_DIR}/src/*/*/*/*.cc
 )
 
 file(GLOB_RECURSE INCLUDE_H 

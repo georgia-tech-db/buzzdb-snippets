@@ -11,7 +11,7 @@
 #include "utils/tutorial.h"
 #include "utils/external_sort.h"
 
-namespace {
+namespace buzzdb{
 
 TEST(ExternalSortTests, BasicTest) {
     int64_t input[] = {3,2,5,1,4,6};
