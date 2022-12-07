@@ -16,11 +16,21 @@ namespace buzzdb {
         };
         
         SlottedPageScheme(uint64_t page_size);
-        void insertTuple(uint64_t value);
-        void deleteTuple(uint16_t index);
-        uint32_t find(uint16_t index);
-        Header header;
+
         std::vector<Tuple> slot_array;
+
+        void insertTuple(uint64_t value);
+
+        Header header;
+
+        void deleteTuple(uint16_t index);
+
+        uint64_t find(uint16_t index);
+
+        
+
+        
+
         ~SlottedPageScheme(){}
     };
 }
