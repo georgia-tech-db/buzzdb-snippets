@@ -15,8 +15,8 @@ namespace buzzdb {
             uint16_t page_size;
         };
         
-        SlottedPageScheme(uint32_t page_size);
-        void insertTuple(uint32_t value);
+        SlottedPageScheme(uint64_t page_size);
+        void insertTuple(uint64_t value);
         void deleteTuple(uint16_t index);
         uint32_t find(uint16_t index);
         Header header;
