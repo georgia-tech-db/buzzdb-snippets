@@ -23,9 +23,9 @@ foreach (test_source ${TEST_CC})
     string(REPLACE ".cc" "" test_name ${test_filename})
 
     # Add the test target separately and as part of "make check-tests".
-    add_executable(${test_name} EXCLUDE_FROM_ALL ${test_source})
+    add_executable(${test_name} ${test_source})
     add_dependencies(check-tests ${test_name})
-    add_executable(${test_name}_valgrind EXCLUDE_FROM_ALL ${test_source})
+    add_executable(${test_name}_valgrind ${test_source})
     add_dependencies(check-tests-valgrind ${test_name}_valgrind)
 
     target_link_libraries(${test_name} 
